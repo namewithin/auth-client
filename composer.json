@@ -1,0 +1,15 @@
+{
+    "name": "pdffiller/supervisor-auth",
+    "description": "Advanced auth for Laravel Passport",
+    "require": {
+        "laravel/framework": "5.7",
+        "laravel/passport": "^7.0"
+    },
+    "authors": [
+        {
+            "name": "kostenko.oleksii",
+            "email": "kostenko.oleksii@pdffiller.team"
+        }
+    ],
+    "minimum-stability": "dev"
+}
