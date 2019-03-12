@@ -9,7 +9,7 @@ use League\OAuth2\Server\Grant\PasswordGrant;
 use League\OAuth2\Server\RequestEvent;
 use Psr\Http\Message\ServerRequestInterface;
 
-class DummyUserGrant extends PasswordGrant
+class ClientRelatedGrant extends PasswordGrant
 {
     /**
      * @param ServerRequestInterface $request
@@ -21,12 +21,12 @@ class DummyUserGrant extends PasswordGrant
      */
     protected function validateUser(ServerRequestInterface $request, ClientEntityInterface $client)
     {
-        $dummyUser = app(config('auth.providers.client_user.model'))
+        $clientRelated = app(config('auth.providers.client.model'))
             ->where('client_id', $client->getIdentifier())
             ->firstOrFail();
 
-        $username = $dummyUser->email;
-        $password = decrypt($dummyUser->encrypted_password);
+        $username = $clientRelated->email;
+        $password = decrypt($clientRelated->encrypted_password);
 
         $user = $this->userRepository->getUserEntityByUserCredentials(
             $username,
@@ -49,6 +49,6 @@ class DummyUserGrant extends PasswordGrant
      */
     public function getIdentifier()
     {
-        return 'dummy_user';
+        return 'client_related';
     }
 }
