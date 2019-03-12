@@ -11,5 +11,10 @@
             "email": "kostenko.oleksii@pdffiller.team"
         }
     ],
+    "autoload": {
+        "psr-4": {
+            "PDFfiller\\SupervisorAuth\\": "src/"
+        }
+    },
     "minimum-stability": "dev"
 }
