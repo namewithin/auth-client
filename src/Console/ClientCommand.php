@@ -1,12 +1,12 @@
 <?php
 
-namespace PDFfiller\SupervisorAuth\Console;
+namespace Supervisor\Auth\Console;
 
 use Illuminate\Support\Facades\Hash;
 use Laravel\Passport\ClientRepository;
 use Laravel\Passport\Console\ClientCommand as PassportClientCommand;
 use Laravel\Passport\Passport;
-use PDFfiller\SupervisorAuth\Models\Client;
+use Supervisor\Auth\Models\Client;
 
 class ClientCommand extends PassportClientCommand
 {

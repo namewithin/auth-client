@@ -1,20 +1,20 @@
 <?php
 
-namespace PDFfiller\SupervisorAuth;
+namespace Supervisor\Auth;
 
 use Illuminate\Auth\RequestGuard;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\ServiceProvider as IlluminateServiceProvider;
-use PDFfiller\SupervisorAuth\Guards\TokenGuard;
-use PDFfiller\SupervisorAuth\Repositories\ClientUser as UserRepository;
-use PDFfiller\SupervisorAuth\Repositories\ClientRepository;
+use Supervisor\Auth\Guards\TokenGuard;
+use Supervisor\Auth\Repositories\ClientUser as UserRepository;
+use Supervisor\Auth\Repositories\ClientRepository;
 use Laravel\Passport\Bridge\RefreshTokenRepository;
 use Laravel\Passport\Passport;
 use Laravel\Passport\TokenRepository;
 use League\OAuth2\Server\AuthorizationServer;
 use League\OAuth2\Server\ResourceServer;
-use PDFfiller\SupervisorAuth\Console\ClientCommand;
-use PDFfiller\SupervisorAuth\Grants\ClientGrant;
+use Supervisor\Auth\Console\ClientCommand;
+use Supervisor\Auth\Grants\ClientRelatedGrant;
 
 class ServiceProvider extends IlluminateServiceProvider
 {
@@ -69,7 +69,7 @@ class ServiceProvider extends IlluminateServiceProvider
      */
     protected function makeClientGrant()
     {
-        $grant = new ClientGrant(
+        $grant = new ClientRelatedGrant(
             $this->app->make(UserRepository::class),
             $this->app->make(RefreshTokenRepository::class)
         );

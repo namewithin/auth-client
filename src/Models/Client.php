@@ -1,6 +1,6 @@
 <?php
 
-namespace PDFfiller\SupervisorAuth\Models;
+namespace Supervisor\Auth\Models;
 
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Laravel\Passport\Client as PassportClient;

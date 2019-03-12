@@ -1,6 +1,6 @@
 <?php
 
-namespace PDFfiller\SupervisorAuth\Repositories;
+namespace Supervisor\Auth\Repositories;
 
 use Laravel\Passport\Bridge\UserRepository;
 

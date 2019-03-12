@@ -1,6 +1,6 @@
 <?php
 
-namespace PDFfiller\SupervisorAuth\Guards;
+namespace Supervisor\Auth\Guards;
 
 use Illuminate\Http\Request;
 use Laravel\Passport\Guards\TokenGuard as PassportTokenGuard;

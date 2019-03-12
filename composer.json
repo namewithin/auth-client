@@ -13,7 +13,7 @@
     ],
     "autoload": {
         "psr-4": {
-            "PDFfiller\\SupervisorAuth\\": "src/"
+            "Supervisor\\Auth\\": "src/"
         }
     },
     "minimum-stability": "dev"

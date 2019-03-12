@@ -1,6 +1,6 @@
 <?php
 
-namespace PDFfiller\SupervisorAuth\Grants;
+namespace Supervisor\Auth\Grants;
 
 use League\OAuth2\Server\Entities\ClientEntityInterface;
 use League\OAuth2\Server\Entities\UserEntityInterface;

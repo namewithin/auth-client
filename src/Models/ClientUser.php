@@ -1,6 +1,6 @@
 <?php
 
-namespace PDFfiller\SupervisorAuth\Models;
+namespace Supervisor\Auth\Models;
 
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
