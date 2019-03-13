@@ -3,18 +3,11 @@
 namespace Supervisor\Auth;
 
 use Illuminate\Auth\RequestGuard;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\ServiceProvider as IlluminateServiceProvider;
-use Supervisor\Auth\Guards\TokenGuard;
-use Supervisor\Auth\Repositories\ClientUser as UserRepository;
-use Supervisor\Auth\Repositories\ClientRepository;
-use Laravel\Passport\Bridge\RefreshTokenRepository;
-use Laravel\Passport\Passport;
 use Laravel\Passport\TokenRepository;
-use League\OAuth2\Server\AuthorizationServer;
 use League\OAuth2\Server\ResourceServer;
-use Supervisor\Auth\Console\ClientCommand;
-use Supervisor\Auth\Grants\ClientRelatedGrant;
+use Supervisor\Auth\Guards\ClientGuard;
+use Laravel\Passport\ClientRepository;
 
 class ServiceProvider extends IlluminateServiceProvider
 {
@@ -25,17 +18,7 @@ class ServiceProvider extends IlluminateServiceProvider
      */
     public function boot()
     {
-        $this->commands([
-            ClientCommand::class,
-        ]);
-
-        app(AuthorizationServer::class)->enableGrantType(
-            $this->makeClientGrant(), Passport::tokensExpireIn()
-        );
-
-        $this->setAuthProvider();
-
-        Passport::routes();
+        //
     }
 
     /**
@@ -45,45 +28,7 @@ class ServiceProvider extends IlluminateServiceProvider
      */
     public function register()
     {
-        $this->registerMigrations();
-
         $this->registerGuard();
-    }
-
-    /**
-     * Register Passport's migration files.
-     *
-     * @return void
-     */
-    protected function registerMigrations()
-    {
-        if (Passport::$runsMigrations) {
-            return $this->loadMigrationsFrom(__DIR__ . '/../database/migrations');
-        }
-    }
-
-    /**
-     * Create and configure a Password grant instance.
-     *
-     * @return \League\OAuth2\Server\Grant\PasswordGrant
-     */
-    protected function makeClientGrant()
-    {
-        $grant = new ClientRelatedGrant(
-            $this->app->make(UserRepository::class),
-            $this->app->make(RefreshTokenRepository::class)
-        );
-
-        $grant->setRefreshTokenTTL(Passport::refreshTokensExpireIn());
-
-        return $grant;
-    }
-
-    protected function setAuthProvider()
-    {
-        $grantType = $this->app->request->get('grant_type', 'personal');
-        $provider = config('auth.grant_type_to_provider.' . $grantType);
-        config(['auth.guards.api.provider' => $provider]);
     }
 
     /**
@@ -93,10 +38,8 @@ class ServiceProvider extends IlluminateServiceProvider
      */
     protected function registerGuard()
     {
-        Auth::extend('passport', function ($app, $name, array $config) {
-            return tap($this->makeGuard($config), function ($guard) {
-                $this->app->refresh('request', $guard, 'setRequest');
-            });
+        \Auth::extend('client', function ($app, $name, array $config) {
+            return $this->makeGuard($config);
         });
     }
 
@@ -109,13 +52,14 @@ class ServiceProvider extends IlluminateServiceProvider
     protected function makeGuard(array $config)
     {
         return new RequestGuard(function ($request) use ($config) {
-            return (new TokenGuard(
+            return (new ClientGuard(
+                $request,
                 $this->app->make(ResourceServer::class),
-                Auth::createUserProvider($config['provider']),
+                \Auth::createUserProvider($config['provider']),
                 $this->app->make(TokenRepository::class),
                 $this->app->make(ClientRepository::class),
                 $this->app->make('encrypter')
-            ))->user($request);
+            ))->user();
         }, $this->app['request']);
     }
 }
