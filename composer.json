@@ -1,5 +1,5 @@
 {
-    "name": "alexeykostenko/auth-client",
+    "name": "namewithin/auth-client",
     "description": "Advanced auth for Laravel Passport",
     "require": {
         "laravel/framework": "5.7.*",
