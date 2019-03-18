@@ -60,4 +60,4 @@ Route::group([
 ```bash
 php artisan passport:client --client
 ```
-Then you need to add a client to the clients table and set client ID in the column user_id from the oauth_clients table
+Then you need to add a client to the `clients` table and set client ID in the column `user_id` from the `oauth_clients` table
