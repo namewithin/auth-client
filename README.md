@@ -34,12 +34,12 @@ composer require namewithin/auth-client
 
 You can define guard with the client provider in the `configs/auth.php`
 ```php
-    'guards' => [
-        'client-guard' => [
-            'driver-guard'   => 'client-driver',
-            'provider' => 'client',
-        ],
+'guards' => [
+    'client-guard' => [
+        'driver-guard'   => 'client-driver',
+        'provider' => 'client',
     ],
+],
 ```
 
 Now you can protect your routes, only need to add the auth guard to auth middleware:
@@ -51,6 +51,6 @@ Route::get('profile', function () {
 Route::group([
     'middleware' => ['auth:api,client-guard'], // Only authenticated users and clients may enter...
 ], function () {
-	   Route::get('ticket/{id}/history', 'HistoryController@ticket');
+    Route::get('ticket/{id}/history', 'HistoryController@ticket');
 });
 ```
