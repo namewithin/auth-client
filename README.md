@@ -1,4 +1,4 @@
-# Supervisor Auth Client
+# Auth Client
 
 This project makes it simple to integrate your application with:
  - [Supervisor Auth Client](https://github.com/namewithin/auth-client)
