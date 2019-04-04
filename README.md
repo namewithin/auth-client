@@ -29,7 +29,7 @@ composer require namewithin/auth-client
 
 ## Usage
 
-You can define guard with the client provider in the `configs/auth.php`
+You can define guard with the client provider in the `config/auth.php`
 ```php
 'guards' => [
     'client-guard' => [
