@@ -33,8 +33,8 @@ You can define guard with the client provider in the `config/auth.php`
 ```php
 'guards' => [
     'client-guard' => [
-        'driver-guard'   => 'client-driver',
-        'provider' => 'client',
+        'driver-guard' => 'client-driver',
+        'provider'     => 'client',
     ],
 ],
 ```
