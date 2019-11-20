@@ -2,7 +2,7 @@
 
 ## Requirements
 
-  - laravel/framework: ^5.7
+  - laravel/framework: ~6.0
   - laravel/passport: ^7.0
 
 ## Installation
