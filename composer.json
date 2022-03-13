@@ -2,7 +2,7 @@
     "name": "namewithin/auth-client",
     "description": "Advanced auth for Laravel Passport",
     "require": {
-        "laravel/framework": "~6.0",
+        "laravel/framework": "~6.0|~7.0|~8.0|~9.0",
         "laravel/passport": "^7.0||^8.0||^9.0"
     },
     "authors": [
