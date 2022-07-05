@@ -7,6 +7,7 @@ use Illuminate\Support\ServiceProvider as IlluminateServiceProvider;
 use Laravel\Passport\TokenRepository;
 use League\OAuth2\Server\ResourceServer;
 use Supervisor\Auth\Guards\ClientGuard;
+use Supervisor\Auth\Guards\TrustedClientGuard;
 use Laravel\Passport\ClientRepository;
 
 class ServiceProvider extends IlluminateServiceProvider
@@ -41,13 +42,17 @@ class ServiceProvider extends IlluminateServiceProvider
         \Auth::extend('client', function ($app, $name, array $config) {
             return $this->makeGuard($config);
         });
+
+        \Auth::extend('trusted.client', function ($app, $name, array $config) {
+            return $this->makeTrustedClientGuard($config);
+        });
     }
 
     /**
      * Make an instance of the token guard.
      *
      * @param  array $config
-     * @return \Illuminate\Auth\RequestGuard
+     * @return RequestGuard
      */
     protected function makeGuard(array $config)
     {
@@ -60,6 +65,19 @@ class ServiceProvider extends IlluminateServiceProvider
                 $this->app->make(ClientRepository::class),
                 $this->app->make('encrypter')
             ))->user();
+        }, $this->app['request']);
+    }
+
+    /**
+     * Make an instance of the token guard.
+     *
+     * @param  array $config
+     * @return RequestGuard
+     */
+    protected function makeTrustedClientGuard(array $config)
+    {
+        return new RequestGuard(function ($request) use ($config) {
+            return (new TrustedClientGuard($request))->user();
         }, $this->app['request']);
     }
 }
